@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: greenlight-prototype-core-api
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ""
+
+server:
+  port: 0  # 랜덤 포트
+
+logging:
+  level:
+    root: OFF  # 로깅 비활성화
+    com.winten: OFF
+  config: ~  # Logback XML 무시

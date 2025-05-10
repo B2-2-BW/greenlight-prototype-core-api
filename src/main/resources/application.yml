@@ -30,7 +30,7 @@ management:
 logging:
   config: classpath:logback/logback-spring.xml
   loki:
-    url: ${LOKI_URL}
+    url: http://43.202.94.66:43100/loki/api/v1/push
 #  pattern:
 #    level: %5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
 #  include-application-name: false
@@ -52,7 +52,7 @@ management:
     enabled: true
   zipkin:
     tracing:
-      endpoint: ${ZIPKIN_URL}
+      endpoint: http://43.202.94.66:49411/api/v2/spans
 
 
 ---

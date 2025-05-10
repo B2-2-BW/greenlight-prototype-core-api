@@ -7,12 +7,19 @@
     <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} | [%thread] | %5p | %X{traceId:-} | %X{spanId:-} | %msg%n"/>
     <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} | [%thread] | %5p | %X{traceId:-} | %X{spanId:-} | %msg%n"/>
 
+    <springProperty name="LOKI_URL" source="logging.loki.url" defaultValue="http://localhost:3100/loki/api/v1/push"/>
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>${LOKI_URL}</url>
+        </http>
+    </appender>
     <springProfile name="local">
         <include resource="logback/appender/console-appender.xml" />
 <!--        <include resource="logback/appender/loki-appender.xml" />-->
 
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOKI"/>
 <!--            <appender-ref ref="LOKI"/>-->
         </root>
     </springProfile>

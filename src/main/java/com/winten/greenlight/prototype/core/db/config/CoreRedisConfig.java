@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
@@ -21,42 +20,28 @@ public class CoreRedisConfig {
     @Bean
     public ClientResources clientResources(ObservationRegistry observationRegistry) {
         return ClientResources.builder()
-                .tracing(new MicrometerTracing(observationRegistry, "redis-service"))
-                .build();
+            .tracing(new MicrometerTracing(observationRegistry, "redis-service"))
+            .build();
     }
+
     @Bean
     public LettuceConnectionFactory lettuceConnectionFactory(RedisProperties properties, ClientResources clientResources) {
         var config = new RedisStandaloneConfiguration(properties.getHost(), properties.getPort());
         config.setPassword(properties.getPassword());
         var clientConfig = LettuceClientConfiguration.builder()
-                .clientResources(clientResources)
-                .build();
+            .clientResources(clientResources)
+            .build();
         return new LettuceConnectionFactory(config, clientConfig);
-    }
-
-    @Bean
-    public ReactiveRedisOperations<String, String> reactiveRedisTemplate(LettuceConnectionFactory factory) {
-        StringRedisSerializer serializer = new StringRedisSerializer();
-        RedisSerializationContext<String, String> serializationContext = RedisSerializationContext
-                .<String, String>newSerializationContext()
-                .key(serializer)
-                .value(serializer)
-                .hashKey(serializer)
-                .hashValue(serializer)
-                .build();
-        return new ReactiveRedisTemplate<>(factory, serializationContext);
     }
 
     @Bean
     public ReactiveRedisTemplate<String, EventEntity> reactiveEventRedisTemplate(LettuceConnectionFactory factory, ObjectMapper objectMapper) {
         RedisSerializer<String> keySerializer = new StringRedisSerializer();
         RedisSerializer<EventEntity> valueSerializer = new Jackson2JsonRedisSerializer<>(objectMapper, EventEntity.class);
-
         RedisSerializationContext<String, EventEntity> serializationContext = RedisSerializationContext
-                .<String, EventEntity>newSerializationContext(keySerializer)
-                .value(valueSerializer)
-                .build();
-
+            .<String, EventEntity>newSerializationContext(keySerializer)
+            .value(valueSerializer)
+            .build();
         return new ReactiveRedisTemplate<>(factory, serializationContext);
     }
 }
