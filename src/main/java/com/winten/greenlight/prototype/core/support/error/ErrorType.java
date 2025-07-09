@@ -11,6 +11,7 @@ public enum ErrorType {
     ACTION_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Action not found.", LogLevel.INFO),
     ACTION_GROUP_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Action Group not found.", LogLevel.INFO),
     CUSTOMER_NOT_FOUND(HttpStatus.NOT_FOUND, ErrorCode.E404, "Customer not found.", LogLevel.INFO),
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, ErrorCode.E404, "Bad Request.", LogLevel.INFO),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, ErrorCode.E401, "Invalid token.", LogLevel.INFO),
     REDIS_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.E500, "An unexpected error has occurred while accessing data." , LogLevel.ERROR ),
     INVALID_DATA(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.E500, "Data is not valid." , LogLevel.WARN ),

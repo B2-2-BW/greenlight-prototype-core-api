@@ -11,7 +11,7 @@ public enum WaitStatus {
      *
      *
      */
-    ALLOWED("입장 가능"),
+    READY("입장 가능"),
 
     /**
      * 입장 완료: 서비스에 입장한 최종 상태입니다.

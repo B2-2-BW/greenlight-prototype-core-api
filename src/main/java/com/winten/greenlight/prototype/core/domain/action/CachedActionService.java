@@ -19,7 +19,11 @@ public class CachedActionService {
         return actionRepository.getActionById(actionId)
                 .switchIfEmpty(Mono.error(CoreException.of(ErrorType.ACTION_NOT_FOUND, "Action을 찾을 수 없습니다. actionId: " + actionId)));
     }
-
+    @Cacheable(cacheNames = "action-url", key = "#url")
+    public Mono<Action> findActionByUrl(String url) {
+        // 실제 구현은 DB 조회 로직
+        return actionRepository.findByUrl(url);
+    }
     @CacheEvict(cacheNames = "action", key = "#actionId")
     public Mono<Void> invalidateActionCache(Long actionId) {
         return Mono.empty();
