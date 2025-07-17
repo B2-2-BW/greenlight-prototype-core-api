@@ -117,4 +117,19 @@ public class JwtUtil {
         Date expiration = extractExpiration(token);
         return expiration.getTime() - System.currentTimeMillis();
     }
+
+    /**
+     * JWT 토큰에서 actionId를 추출합니다.
+     *
+     * @param token JWT 토큰 문자열
+     * @return 추출된 actionId (없으면 null)
+     */
+    public Long extractActionId(String token) {
+        try {
+            Claims claims = extractAllClaims(token);
+            return claims.get("actionId", Long.class);
+        } catch (JwtException | IllegalArgumentException e) {
+            return null;
+        }
+    }
 }

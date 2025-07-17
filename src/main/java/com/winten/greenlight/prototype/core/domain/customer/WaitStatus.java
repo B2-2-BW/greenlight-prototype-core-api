@@ -11,12 +11,22 @@ public enum WaitStatus {
      *
      *
      */
-    ALLOWED("입장 가능"),
+    READY("입장 가능"),
 
     /**
      * 입장 완료: 서비스에 입장한 최종 상태입니다.
      */
-    ENTERED("입장 완료")
+    ENTERED("입장 완료"),
+
+    /**
+     * 대기열 적용 대상이 아님: 특정 규칙에 의해 대기열을 우회한 상태입니다.
+     */
+    BYPASSED("대기열 우회"),
+
+    /**
+     * 비활성화: 액션 또는 액션 그룹이 현재 비활성화된 상태입니다.
+     */
+    DISABLED("비활성화")
     ;
 
     private final String description; // 상태에 대한 설명

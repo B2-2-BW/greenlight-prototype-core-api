@@ -17,8 +17,10 @@ public class CustomerController {
     //  1. 서비스 입장
     @PostMapping("{actionId}/check-in")
     public Mono<ResponseEntity<CustomerEntryResponse>> requestEntry(
+            @RequestHeader("x-greenlight-ticket") String greenlightTicket,
             @RequestBody CustomerEntryRequest request
     ) {
+
         long timestamp = System.currentTimeMillis();
         return customerService.requestEntry(request.toCustomerEntry(timestamp))
                 .map(entry -> CustomerEntryResponse.of(entry))
